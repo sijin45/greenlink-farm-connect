@@ -57,8 +57,13 @@ const taTranslation = {
   // Chatbot
   "chatbot.placeholder": "எதையும் கேளுங்கள்...",
   "chatbot.title": "கிரீன்லிங்க் உதவியாளர்",
-  "chatbot.welcome": "வணக்கம்! இன்று உங்கள் விவசாய அல்லது கடை பிடிக்கும் தேவைகளுக்கு நான் எவ்வாறு உதவ முடியும்?",
+  "chatbot.welcome": "வணக்கம்! நான் AI-ஆல் இயங்கும் உதவியாளர். மேம்பட்ட செயல்பாட்டை இயக்க, மேலே உள்ள சாவி ஐகானைப் பயன்படுத்தி உங்கள் OpenAI API சாவியை அமைக்கவும்.",
   "chatbot.button": "எங்களுடன் அரட்டையடிக்கவும்",
+  "chatbot.api_key": "API சாவியை அமைக்கவும்",
+  "chatbot.api_key_title": "OpenAI API சாவியை அமைக்கவும்",
+  "chatbot.api_key_description": "AI பதில்களை இயக்க உங்கள் OpenAI API சாவியை உள்ளிடவும்",
+  "chatbot.api_key_save": "சாவியை சேமிக்கவும்",
+  "chatbot.thinking": "சிந்திக்கிறது...",
   
   // Payment
   "payment.title": "செலுத்த ஸ்கேன் செய்யவும்",

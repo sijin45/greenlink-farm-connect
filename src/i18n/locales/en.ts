@@ -57,8 +57,13 @@ const enTranslation = {
   // Chatbot
   "chatbot.placeholder": "Ask me anything...",
   "chatbot.title": "GreenLink Assistant",
-  "chatbot.welcome": "Hello! How can I help you with your farming or shopping needs today?",
+  "chatbot.welcome": "Hello! I'm an AI-powered assistant. To enable advanced functionality, please set your OpenAI API key using the key icon above.",
   "chatbot.button": "Chat with us",
+  "chatbot.api_key": "Set API Key",
+  "chatbot.api_key_title": "Set OpenAI API Key",
+  "chatbot.api_key_description": "Enter your OpenAI API key to enable AI responses",
+  "chatbot.api_key_save": "Save Key",
+  "chatbot.thinking": "Thinking...",
 
   // Payment
   "payment.title": "Scan to Pay",
