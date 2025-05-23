@@ -25,7 +25,7 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
 
       QRCode.toCanvas(canvasRef.current, upiUrl, {
         width: 200,
-        height: 200,
+        margin: 2
       }, (error) => {
         if (error) console.error('QR Code generation error:', error);
       });
