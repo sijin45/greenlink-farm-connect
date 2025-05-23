@@ -1,17 +1,20 @@
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 export const Header = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#features", label: "Features" },
-    { href: "#buy", label: "Buy" },
-    { href: "#sell", label: "Sell" },
-    { href: "#contact", label: "Contact" },
+    { href: "#home", label: t("nav.home") },
+    { href: "#about", label: t("nav.about") },
+    { href: "#features", label: t("nav.features") },
+    { href: "#buy", label: t("nav.buy") },
+    { href: "#sell", label: t("nav.sell") },
+    { href: "#contact", label: t("nav.contact") },
   ];
 
   const scrollToSection = (href: string) => {
@@ -42,6 +45,11 @@ export const Header = () => {
             ))}
           </ul>
 
+          {/* Language Selector */}
+          <div className="hidden md:block">
+            <LanguageSelector />
+          </div>
+
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
@@ -66,6 +74,9 @@ export const Header = () => {
                 </button>
               </li>
             ))}
+            <li className="pt-2">
+              <LanguageSelector />
+            </li>
           </ul>
         )}
       </nav>

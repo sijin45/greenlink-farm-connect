@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -9,6 +10,7 @@ import { SellForm } from "@/components/SellForm";
 import { Contact } from "@/components/Contact";
 import { PaymentModal } from "@/components/PaymentModal";
 import { BillSection } from "@/components/BillSection";
+import { Chatbot } from "@/components/Chatbot";
 
 export interface Product {
   id: number;
@@ -53,6 +55,7 @@ const initialProducts: Product[] = [
 ];
 
 const Index = () => {
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [billItems, setBillItems] = useState<BillItem[]>([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -118,7 +121,7 @@ const Index = () => {
         <Features />
         
         <section id="buy" className="py-16 px-4 max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-green-800">Buy Fresh Produce</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-green-800">{t('buy.title')}</h2>
           <ProductGrid products={products} onAddToBill={addToBill} />
           {billItems.length > 0 && (
             <BillSection billItems={billItems} onProceedToPayment={proceedToPayment} />
@@ -130,7 +133,7 @@ const Index = () => {
       </main>
 
       <footer className="bg-green-800 text-white text-center py-8">
-        <p>© 2025 GreenLink. All rights reserved.</p>
+        <p>{t('footer.copyright')}</p>
       </footer>
 
       <PaymentModal 
@@ -139,6 +142,8 @@ const Index = () => {
         onClose={() => setShowPaymentModal(false)}
         onComplete={completePayment}
       />
+      
+      <Chatbot />
     </div>
   );
 };

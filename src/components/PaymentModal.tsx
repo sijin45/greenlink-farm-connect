@@ -1,5 +1,6 @@
 
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import QRCode from "qrcode";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ interface PaymentModalProps {
 }
 
 export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: PaymentModalProps) => {
+  const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -36,18 +38,18 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-green-700 text-center">Scan to Pay</DialogTitle>
+          <DialogTitle className="text-green-700 text-center">{t('payment.title')}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center space-y-4">
           <canvas ref={canvasRef} className="border rounded-lg" />
           <p className="text-center text-gray-600">
-            Scan the QR code with your payment app to pay ₹{grandTotal.toFixed(2)}
+            {t('payment.scan')} {grandTotal.toFixed(2)}
           </p>
           <Button 
             onClick={onComplete}
             className="w-full bg-green-600 hover:bg-green-700"
           >
-            Complete Payment
+            {t('payment.complete')}
           </Button>
         </div>
       </DialogContent>
