@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const Header = () => {
   const { t } = useTranslation();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
@@ -45,9 +47,18 @@ export const Header = () => {
             ))}
           </ul>
 
-          {/* Language Selector */}
-          <div className="hidden md:block">
+          {/* User info and controls */}
+          <div className="hidden md:flex items-center space-x-4">
+            <span className="text-sm">Welcome, {user?.username}</span>
             <LanguageSelector />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={logout}
+              className="text-green-800 border-green-200 hover:bg-green-100"
+            >
+              Logout
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,6 +85,19 @@ export const Header = () => {
                 </button>
               </li>
             ))}
+            <li className="pt-2 border-t border-green-700">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Welcome, {user?.username}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={logout}
+                  className="text-green-800 border-green-200 hover:bg-green-100"
+                >
+                  Logout
+                </Button>
+              </div>
+            </li>
             <li className="pt-2">
               <LanguageSelector />
             </li>

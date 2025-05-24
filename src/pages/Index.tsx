@@ -1,6 +1,7 @@
-
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { LoginPage } from "@/components/LoginPage";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -56,10 +57,16 @@ const initialProducts: Product[] = [
 
 const Index = () => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [billItems, setBillItems] = useState<BillItem[]>([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   const addToBill = (productId: number, quantity: number, unit: string) => {
     const product = products.find(p => p.id === productId);
