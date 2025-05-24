@@ -18,6 +18,7 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
   const { user } = useAuth();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [qrGenerated, setQrGenerated] = useState(false);
+  const [qrError, setQrError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen && canvasRef.current && !qrGenerated) {
@@ -35,8 +36,14 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
       const upiUrl = `upi://pay?pa=${merchantUPI}&pn=${merchantName}&am=${grandTotal.toFixed(2)}&tn=Payment to ${merchantName} by ${user?.username}&tr=${transactionId}&cu=INR&mc=1234`;
 
       console.log('UPI URL:', upiUrl);
+      console.log('Canvas element:', canvasRef.current);
 
-      QRCode.toCanvas(canvasRef.current, upiUrl, {
+      // Set canvas dimensions explicitly
+      const canvas = canvasRef.current;
+      canvas.width = 250;
+      canvas.height = 250;
+
+      QRCode.toCanvas(canvas, upiUrl, {
         width: 250,
         margin: 2,
         color: {
@@ -46,9 +53,11 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
       }, (error) => {
         if (error) {
           console.error('QR Code generation error:', error);
+          setQrError(error.message);
         } else {
           console.log('QR Code generated successfully');
           setQrGenerated(true);
+          setQrError(null);
         }
       });
     }
@@ -58,6 +67,7 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
   useEffect(() => {
     if (!isOpen) {
       setQrGenerated(false);
+      setQrError(null);
     }
   }, [isOpen]);
 
@@ -71,7 +81,17 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
         </DialogHeader>
         <div className="flex flex-col items-center space-y-6 p-4">
           <div className="bg-white p-6 rounded-xl border-2 border-green-200 shadow-lg">
-            <canvas ref={canvasRef} className="border rounded-lg" />
+            {qrError ? (
+              <div className="w-[250px] h-[250px] flex items-center justify-center bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-sm text-center">Error generating QR code: {qrError}</p>
+              </div>
+            ) : (
+              <canvas 
+                ref={canvasRef} 
+                className="border rounded-lg"
+                style={{ display: 'block', width: '250px', height: '250px' }}
+              />
+            )}
           </div>
           <div className="text-center space-y-2">
             <p className="text-2xl font-bold text-green-700">
