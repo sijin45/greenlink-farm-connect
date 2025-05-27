@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import QRCode from "qrcode";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContext";
+import { useSupabaseAuth } from "@/contexts/SupabaseAuthContext";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -15,7 +15,7 @@ interface PaymentModalProps {
 
 export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: PaymentModalProps) => {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { profile } = useSupabaseAuth();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [qrGenerated, setQrGenerated] = useState(false);
   const [qrError, setQrError] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
       const merchantUPI = "greenlink@paytm";
       
       // Enhanced UPI URL with more details
-      const upiUrl = `upi://pay?pa=${merchantUPI}&pn=${merchantName}&am=${grandTotal.toFixed(2)}&tn=Payment to ${merchantName} by ${user?.username}&tr=${transactionId}&cu=INR&mc=1234`;
+      const upiUrl = `upi://pay?pa=${merchantUPI}&pn=${merchantName}&am=${grandTotal.toFixed(2)}&tn=Payment to ${merchantName} by ${profile?.username}&tr=${transactionId}&cu=INR&mc=1234`;
 
       console.log('UPI URL:', upiUrl);
       console.log('Canvas element:', canvasRef.current);
@@ -61,7 +61,7 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
         }
       });
     }
-  }, [isOpen, grandTotal, user?.username, qrGenerated]);
+  }, [isOpen, grandTotal, profile?.username, qrGenerated]);
 
   // Reset QR generation state when modal closes
   useEffect(() => {
@@ -101,7 +101,7 @@ export const PaymentModal = ({ isOpen, grandTotal, onClose, onComplete }: Paymen
               {t('payment.scan')} ₹{grandTotal.toFixed(2)}
             </p>
             <p className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-              User: {user?.username}
+              User: {profile?.username}
             </p>
           </div>
           <Button 
