@@ -98,6 +98,10 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
         fetchProfile(session.user.id).then((profile) => {
           setProfile(profile);
           setLoading(false);
+        }).catch((error) => {
+          console.error('Profile fetch failed:', error);
+          setProfile(null);
+          setLoading(false);
         });
       } else {
         console.log('No initial user, setting loading to false...');
