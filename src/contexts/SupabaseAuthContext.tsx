@@ -68,8 +68,13 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
         
         if (session?.user) {
           console.log('User found, fetching profile...');
-          const userProfile = await fetchProfile(session.user.id);
-          setProfile(userProfile);
+          try {
+            const userProfile = await fetchProfile(session.user.id);
+            setProfile(userProfile);
+          } catch (error) {
+            console.error('Failed to fetch profile:', error);
+            setProfile(null);
+          }
         } else {
           console.log('No user, clearing profile...');
           setProfile(null);
@@ -90,23 +95,19 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
       }
       
       console.log('Initial session check:', { session: !!session });
-      setSession(session);
-      setUser(session?.user ?? null);
       
-      if (session?.user) {
-        console.log('Initial user found, fetching profile...');
-        fetchProfile(session.user.id).then((profile) => {
-          setProfile(profile);
-          setLoading(false);
-        }).catch((error) => {
-          console.error('Profile fetch failed:', error);
-          setProfile(null);
-          setLoading(false);
-        });
-      } else {
-        console.log('No initial user, setting loading to false...');
+      // If there's no session, we can immediately set loading to false
+      if (!session) {
+        console.log('No initial session, setting loading to false...');
+        setSession(null);
+        setUser(null);
+        setProfile(null);
         setLoading(false);
+        return;
       }
+
+      // If there is a session, the onAuthStateChange will handle it
+      console.log('Session found, onAuthStateChange will handle it...');
     });
 
     return () => subscription.unsubscribe();
