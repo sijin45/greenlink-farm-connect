@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -87,7 +86,7 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
 
     // Check for existing session
     console.log('Checking for existing session...');
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
+    supabase.auth.getSession().then(async ({ data: { session }, error }) => {
       if (error) {
         console.error('Error getting session:', error);
         setLoading(false);
@@ -96,18 +95,25 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
       
       console.log('Initial session check:', { session: !!session });
       
-      // If there's no session, we can immediately set loading to false
-      if (!session) {
-        console.log('No initial session, setting loading to false...');
-        setSession(null);
-        setUser(null);
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        console.log('Initial user found, fetching profile...');
+        try {
+          const userProfile = await fetchProfile(session.user.id);
+          setProfile(userProfile);
+        } catch (error) {
+          console.error('Failed to fetch profile:', error);
+          setProfile(null);
+        }
+      } else {
+        console.log('No initial user found...');
         setProfile(null);
-        setLoading(false);
-        return;
       }
-
-      // If there is a session, the onAuthStateChange will handle it
-      console.log('Session found, onAuthStateChange will handle it...');
+      
+      console.log('Initial check complete, setting loading to false...');
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
