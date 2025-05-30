@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { useAuth } from "@/contexts/AuthContext";
+import { useSupabaseAuth } from "@/contexts/SupabaseAuthContext";
 
 export const Header = () => {
   const { t } = useTranslation();
-  const { user, logout } = useAuth();
+  const { profile, signOut } = useSupabaseAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
@@ -49,12 +49,12 @@ export const Header = () => {
 
           {/* User info and controls */}
           <div className="hidden md:flex items-center space-x-4">
-            <span className="text-sm">Welcome, {user?.username}</span>
+            <span className="text-sm">Welcome, {profile?.username}</span>
             <LanguageSelector />
             <Button
               variant="outline"
               size="sm"
-              onClick={logout}
+              onClick={signOut}
               className="text-green-800 border-green-200 hover:bg-green-100"
             >
               Logout
@@ -87,11 +87,11 @@ export const Header = () => {
             ))}
             <li className="pt-2 border-t border-green-700">
               <div className="flex items-center justify-between">
-                <span className="text-sm">Welcome, {user?.username}</span>
+                <span className="text-sm">Welcome, {profile?.username}</span>
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={logout}
+                  onClick={signOut}
                   className="text-green-800 border-green-200 hover:bg-green-100"
                 >
                   Logout
