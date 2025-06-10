@@ -6,6 +6,7 @@ const enTranslation = {
   "nav.features": "Features",
   "nav.buy": "Buy",
   "nav.sell": "Sell",
+  "nav.rent": "Rent Vehicles",
   "nav.contact": "Contact",
   
   // Hero section
@@ -44,6 +45,18 @@ const enTranslation = {
   "sell.form.category": "Select Category",
   "sell.form.submit": "List Product",
   
+  // Rent Vehicles section
+  "rent.title": "Rent Agricultural Vehicles",
+  "rent.subtitle": "Access the equipment you need for efficient farming",
+  "rent.form.name": "Vehicle Name",
+  "rent.form.description": "Vehicle Description",
+  "rent.form.price": "Daily Rate (INR)",
+  "rent.form.location": "Location",
+  "rent.form.type": "Vehicle Type",
+  "rent.form.submit": "List Vehicle",
+  "rent.book": "Book Now",
+  "rent.perDay": "per day",
+  
   // Contact section
   "contact.title": "Contact Us",
   "contact.form.name": "Your Name",
@@ -68,7 +81,12 @@ const enTranslation = {
   // Payment
   "payment.title": "Scan to Pay",
   "payment.scan": "Scan the QR code with your payment app to pay ₹",
-  "payment.complete": "Complete Payment"
+  "payment.complete": "Complete Payment",
+
+  // Location
+  "location.current": "Current Location",
+  "location.detecting": "Detecting...",
+  "location.failed": "Location unavailable"
 };
 
 export default enTranslation;

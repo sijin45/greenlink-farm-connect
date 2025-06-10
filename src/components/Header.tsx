@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { LocationSelector } from "@/components/LocationSelector";
 import { useSupabaseAuth } from "@/contexts/SupabaseAuthContext";
 
 export const Header = () => {
@@ -16,6 +17,7 @@ export const Header = () => {
     { href: "#features", label: t("nav.features") },
     { href: "#buy", label: t("nav.buy") },
     { href: "#sell", label: t("nav.sell") },
+    { href: "#rent", label: t("nav.rent") },
     { href: "#contact", label: t("nav.contact") },
   ];
 
@@ -50,6 +52,7 @@ export const Header = () => {
           {/* User info and controls */}
           <div className="hidden md:flex items-center space-x-4">
             <span className="text-sm">Welcome, {profile?.username}</span>
+            <LocationSelector />
             <LanguageSelector />
             <Button
               variant="outline"
@@ -98,7 +101,8 @@ export const Header = () => {
                 </Button>
               </div>
             </li>
-            <li className="pt-2">
+            <li className="pt-2 space-y-2">
+              <LocationSelector />
               <LanguageSelector />
             </li>
           </ul>

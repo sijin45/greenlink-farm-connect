@@ -6,6 +6,7 @@ const taTranslation = {
   "nav.features": "அம்சங்கள்",
   "nav.buy": "வாங்க",
   "nav.sell": "விற்க",
+  "nav.rent": "வாகனங்கள் வாடகை",
   "nav.contact": "தொடர்பு",
   
   // Hero section
@@ -44,6 +45,18 @@ const taTranslation = {
   "sell.form.category": "வகையைத் தேர்ந்தெடுக்கவும்",
   "sell.form.submit": "தயாரிப்பைப் பட்டியலிடுங்கள்",
   
+  // Rent Vehicles section
+  "rent.title": "வேளாண் வாகனங்கள் வாடகை",
+  "rent.subtitle": "திறமையான விவசாயத்திற்கு தேவையான உபகரணங்களை அணுகவும்",
+  "rent.form.name": "வாகன பெயர்",
+  "rent.form.description": "வாகன விளக்கம்",
+  "rent.form.price": "தினசரி கட்டணம் (INR)",
+  "rent.form.location": "இடம்",
+  "rent.form.type": "வாகன வகை",
+  "rent.form.submit": "வாகனத்தை பட்டியலிடுங்கள்",
+  "rent.book": "இப்போதே முன்பதிவு செய்யுங்கள்",
+  "rent.perDay": "ஒரு நாளுக்கு",
+  
   // Contact section
   "contact.title": "எங்களை தொடர்பு கொள்ள",
   "contact.form.name": "உங்கள் பெயர்",
@@ -68,7 +81,12 @@ const taTranslation = {
   // Payment
   "payment.title": "செலுத்த ஸ்கேன் செய்யவும்",
   "payment.scan": "QR குறியீட்டை உங்கள் கட்டண பயன்பாட்டுடன் ஸ்கேன் செய்து செலுத்தவும் ₹",
-  "payment.complete": "கட்டணம் முடிந்தது"
+  "payment.complete": "கட்டணம் முடிந்தது",
+
+  // Location
+  "location.current": "தற்போதைய இடம்",
+  "location.detecting": "கண்டறிகிறது...",
+  "location.failed": "இடம் கிடைக்கவில்லை"
 };
 
 export default taTranslation;

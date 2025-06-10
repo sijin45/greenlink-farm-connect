@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSupabaseAuth } from "@/contexts/SupabaseAuthContext";
@@ -9,6 +8,7 @@ import { About } from "@/components/About";
 import { Features } from "@/components/Features";
 import { ProductGrid } from "@/components/ProductGrid";
 import { SellForm } from "@/components/SellForm";
+import { RentVehiclesSection } from "@/components/RentVehiclesSection";
 import { Contact } from "@/components/Contact";
 import { PaymentModal } from "@/components/PaymentModal";
 import { BillSection } from "@/components/BillSection";
@@ -149,6 +149,7 @@ const Index = () => {
         </section>
 
         <SellForm onAddProduct={addProduct} />
+        <RentVehiclesSection />
         <Contact />
       </main>
 
