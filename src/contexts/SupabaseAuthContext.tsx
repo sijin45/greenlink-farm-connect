@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -32,9 +33,10 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
 
   console.log('SupabaseAuthProvider - Current state:', { user: !!user, profile: !!profile, session: !!session, loading });
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = async (userId: string, retryCount = 0): Promise<Profile | null> => {
     try {
-      console.log('Fetching profile for user:', userId);
+      console.log('Fetching profile for user:', userId, 'Retry count:', retryCount);
+      
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -43,6 +45,29 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (error) {
         console.error('Error fetching profile:', error);
+        
+        // If profile doesn't exist, create a basic one
+        if (error.code === 'PGRST116' && retryCount === 0) {
+          console.log('Profile not found, creating basic profile...');
+          const { data: userData } = await supabase.auth.getUser();
+          if (userData.user) {
+            const newProfile = {
+              id: userId,
+              username: userData.user.email?.split('@')[0] || 'User',
+              email: userData.user.email || '',
+              role: 'customer'
+            };
+            
+            const { error: insertError } = await supabase
+              .from('profiles')
+              .insert(newProfile);
+              
+            if (!insertError) {
+              console.log('Basic profile created successfully');
+              return newProfile;
+            }
+          }
+        }
         return null;
       }
 
@@ -84,39 +109,59 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
-    // Check for existing session
+    // Check for existing session with timeout
     console.log('Checking for existing session...');
-    supabase.auth.getSession().then(async ({ data: { session }, error }) => {
-      if (error) {
-        console.error('Error getting session:', error);
-        setLoading(false);
-        return;
-      }
-      
-      console.log('Initial session check:', { session: !!session });
-      
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        console.log('Initial user found, fetching profile...');
-        try {
-          const userProfile = await fetchProfile(session.user.id);
-          setProfile(userProfile);
-        } catch (error) {
-          console.error('Failed to fetch profile:', error);
+    const initializeAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          setLoading(false);
+          return;
+        }
+        
+        console.log('Initial session check:', { session: !!session });
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          console.log('Initial user found, fetching profile...');
+          try {
+            const userProfile = await fetchProfile(session.user.id);
+            setProfile(userProfile);
+          } catch (error) {
+            console.error('Failed to fetch profile:', error);
+            setProfile(null);
+          }
+        } else {
+          console.log('No initial user found...');
           setProfile(null);
         }
-      } else {
-        console.log('No initial user found...');
-        setProfile(null);
+        
+        console.log('Initial check complete, setting loading to false...');
+        setLoading(false);
+      } catch (error) {
+        console.error('Error during auth initialization:', error);
+        setLoading(false);
       }
-      
-      console.log('Initial check complete, setting loading to false...');
+    };
+
+    // Set a timeout to prevent infinite loading
+    const loadingTimeout = setTimeout(() => {
+      console.log('Loading timeout reached, setting loading to false');
       setLoading(false);
+    }, 10000); // 10 second timeout
+
+    initializeAuth().finally(() => {
+      clearTimeout(loadingTimeout);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(loadingTimeout);
+    };
   }, []);
 
   const signUp = async (email: string, password: string, username: string) => {

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSupabaseAuth } from "@/contexts/SupabaseAuthContext";
@@ -64,13 +65,14 @@ const Index = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
 
-  // Show loading state while checking authentication
+  // Show loading state while checking authentication with improved UI
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-gray-600 text-lg">Loading GreenLink...</p>
+          <p className="text-gray-500 text-sm">Connecting to your account</p>
         </div>
       </div>
     );
