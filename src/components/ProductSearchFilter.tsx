@@ -10,21 +10,25 @@ import { Card, CardContent } from "@/components/ui/card";
 interface ProductSearchFilterProps {
   onSearch: (query: string) => void;
   onFilterCategory: (category: string) => void;
-  onFilterPriceRange: (min: number, max: number) => void;
+  onFilterPriceRange: (priceRange: { min: number; max: number }) => void;
+  onSortBy: (sortBy: string) => void;
   categories: string[];
   searchQuery: string;
   selectedCategory: string;
   priceRange: { min: number; max: number };
+  sortBy: string;
 }
 
 export const ProductSearchFilter = ({
   onSearch,
   onFilterCategory,
   onFilterPriceRange,
+  onSortBy,
   categories,
   searchQuery,
   selectedCategory,
-  priceRange
+  priceRange,
+  sortBy
 }: ProductSearchFilterProps) => {
   const { t } = useTranslation();
   const [showFilters, setShowFilters] = useState(false);
@@ -32,13 +36,13 @@ export const ProductSearchFilter = ({
   const [maxPrice, setMaxPrice] = useState(priceRange.max);
 
   const handlePriceFilter = () => {
-    onFilterPriceRange(minPrice, maxPrice);
+    onFilterPriceRange({ min: minPrice, max: maxPrice });
   };
 
   const clearFilters = () => {
     onSearch("");
     onFilterCategory("");
-    onFilterPriceRange(0, 1000);
+    onFilterPriceRange({ min: 0, max: 1000 });
     setMinPrice(0);
     setMaxPrice(1000);
   };
@@ -132,7 +136,7 @@ export const ProductSearchFilter = ({
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('filter.sortBy') || "Sort By"}
                 </label>
-                <Select defaultValue="name">
+                <Select value={sortBy} onValueChange={onSortBy}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>

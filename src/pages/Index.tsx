@@ -71,11 +71,13 @@ const Index = () => {
     searchQuery,
     selectedCategory,
     priceRange,
+    sortBy,
     categories,
     filteredProducts,
     setSearchQuery,
     setSelectedCategory,
-    setPriceRange
+    setPriceRange,
+    setSortBy
   } = useProductFilter(products);
 
   // Show loading state while checking authentication with improved UI
@@ -163,10 +165,12 @@ const Index = () => {
             onSearch={setSearchQuery}
             onFilterCategory={setSelectedCategory}
             onFilterPriceRange={setPriceRange}
+            onSortBy={setSortBy}
             categories={categories}
             searchQuery={searchQuery}
             selectedCategory={selectedCategory}
             priceRange={priceRange}
+            sortBy={sortBy}
           />
 
           {/* Results Summary */}
