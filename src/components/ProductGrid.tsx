@@ -1,6 +1,5 @@
 
-import { useState } from "react";
-import { Product } from "@/pages/Index";
+import { Product } from "@/types/product";
 import { ProductCard } from "@/components/ProductCard";
 
 interface ProductGridProps {

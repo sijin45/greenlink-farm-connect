@@ -1,6 +1,6 @@
 
 import { useState, useMemo } from "react";
-import { Product } from "@/pages/Index";
+import { Product } from "@/types/product";
 
 export const useProductFilter = (products: Product[]) => {
   const [searchQuery, setSearchQuery] = useState("");
