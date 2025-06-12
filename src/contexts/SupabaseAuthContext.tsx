@@ -33,9 +33,9 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
 
   console.log('SupabaseAuthProvider - Current state:', { user: !!user, profile: !!profile, session: !!session, loading });
 
-  const fetchProfile = async (userId: string, retryCount = 0): Promise<Profile | null> => {
+  const fetchProfile = async (userId: string): Promise<Profile | null> => {
     try {
-      console.log('Fetching profile for user:', userId, 'Retry count:', retryCount);
+      console.log('Fetching profile for user:', userId);
       
       const { data, error } = await supabase
         .from('profiles')
@@ -47,7 +47,7 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
         console.error('Error fetching profile:', error);
         
         // If profile doesn't exist, create a basic one
-        if (error.code === 'PGRST116' && retryCount === 0) {
+        if (error.code === 'PGRST116') {
           console.log('Profile not found, creating basic profile...');
           const { data: userData } = await supabase.auth.getUser();
           if (userData.user) {
@@ -58,12 +58,18 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
               role: 'customer'
             };
             
-            const { error: insertError } = await supabase
+            const { data: insertedProfile, error: insertError } = await supabase
               .from('profiles')
-              .insert(newProfile);
+              .insert(newProfile)
+              .select()
+              .single();
               
-            if (!insertError) {
+            if (!insertError && insertedProfile) {
               console.log('Basic profile created successfully');
+              return insertedProfile;
+            } else {
+              console.error('Failed to create profile:', insertError);
+              // Return a default profile if database insert fails
               return newProfile;
             }
           }
@@ -109,7 +115,7 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
-    // Check for existing session with timeout
+    // Check for existing session
     console.log('Checking for existing session...');
     const initializeAuth = async () => {
       try {
@@ -123,21 +129,24 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
         
         console.log('Initial session check:', { session: !!session });
         
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          console.log('Initial user found, fetching profile...');
-          try {
-            const userProfile = await fetchProfile(session.user.id);
-            setProfile(userProfile);
-          } catch (error) {
-            console.error('Failed to fetch profile:', error);
+        // Only update if we don't already have a session (to avoid double setting)
+        if (!loading || !session) {
+          setSession(session);
+          setUser(session?.user ?? null);
+          
+          if (session?.user) {
+            console.log('Initial user found, fetching profile...');
+            try {
+              const userProfile = await fetchProfile(session.user.id);
+              setProfile(userProfile);
+            } catch (error) {
+              console.error('Failed to fetch profile:', error);
+              setProfile(null);
+            }
+          } else {
+            console.log('No initial user found...');
             setProfile(null);
           }
-        } else {
-          console.log('No initial user found...');
-          setProfile(null);
         }
         
         console.log('Initial check complete, setting loading to false...');
@@ -152,7 +161,7 @@ export const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
     const loadingTimeout = setTimeout(() => {
       console.log('Loading timeout reached, setting loading to false');
       setLoading(false);
-    }, 10000); // 10 second timeout
+    }, 5000); // Reduced to 5 seconds
 
     initializeAuth().finally(() => {
       clearTimeout(loadingTimeout);
