@@ -2,24 +2,76 @@
 import { Product } from "@/types/product";
 
 export const initialProducts: Product[] = [
-  { id: 1, name: "Fresh Apples", description: "Juicy red apples from organic farms.", price: 150, quantity: 10, category: "Fruits", image: "https://images.unsplash.com/photo-1570913149827-d1b74b95e7ad", alt: "Close-up of ripe red apples on a tree" },
-  { id: 2, name: "Organic Tomatoes", description: "Ripe tomatoes grown without pesticides.", price: 60, quantity: 15, category: "Vegetables", image: "https://images.unsplash.com/photo-1592925627176-37e4d36e5f9c", alt: "Fresh red tomatoes on a wooden surface" },
-  { id: 3, name: "Mangoes", description: "Sweet Alphonso mangoes from local orchards.", price: 200, quantity: 8, category: "Fruits", image: "https://images.unsplash.com/photo-1591073113125-e46734f2dd64", alt: "Ripe yellow mangoes on a branch" },
-  { id: 4, name: "Potatoes", description: "Freshly harvested potatoes for all dishes.", price: 40, quantity: 20, category: "Vegetables", image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655", alt: "Whole and sliced potatoes on a table" },
-  { id: 5, name: "Cow Milk", description: "Pure, unprocessed cow milk.", price: 50, quantity: 25, category: "Dairy", image: "https://images.unsplash.com/photo-1585553328630-1c9bd8e7f259", alt: "Glass bottle of fresh cow milk on a rustic table" },
-  { id: 6, name: "Organic Compost", description: "Nutrient-rich compost for soil health.", price: 100, quantity: 50, category: "Manure", image: "https://images.pexels.com/photos/9047470/pexels-photo-9047470.jpeg", alt: "Heap of dark organic compost in a garden" },
-  { id: 7, name: "Bananas", description: "Ripe yellow bananas, naturally grown.", price: 50, quantity: 12, category: "Fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c202b3c", alt: "Bunch of ripe yellow bananas" },
-  { id: 8, name: "Carrots", description: "Crunchy carrots, rich in vitamins.", price: 45, quantity: 18, category: "Vegetables", image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37", alt: "Fresh orange carrots with green tops" },
-  { id: 9, name: "Cheddar Cheese", description: "Aged cheddar from local dairies.", price: 300, quantity: 5, category: "Dairy", image: "https://images.unsplash.com/photo-1486297678162-eb27544e315d", alt: "Block of aged cheddar cheese on a cutting board" },
-  { id: 10, name: "NPK Fertilizer", description: "Balanced fertilizer for crop growth.", price: 150, quantity: 30, category: "Fertilizers", image: "https://images.pexels.com/photos/14123017/pexels-photo-14123017.jpeg", alt: "Bag of NPK fertilizer granules in a field" },
-  { id: 11, name: "Oranges", description: "Juicy oranges packed with vitamin C.", price: 80, quantity: 15, category: "Fruits", image: "https://images.unsplash.com/photo-1582979512210-32400a8a3503", alt: "Fresh oranges on a tree branch" },
-  { id: 12, name: "Spinach", description: "Fresh green spinach for healthy meals.", price: 30, quantity: 10, category: "Vegetables", image: "https://images.unsplash.com/photo-1628773826085-7b9e7c28e613", alt: "Fresh green spinach leaves in a bowl" },
-  { id: 13, name: "Butter", description: "Creamy butter made from fresh cream.", price: 200, quantity: 8, category: "Dairy", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc7d", alt: "Block of creamy butter on a wooden table" },
-  { id: 14, name: "Vermicompost", description: "Organic manure from earthworm castings.", price: 120, quantity: 40, category: "Manure", image: "https://images.pexels.com/photos/9047470/pexels-photo-9047470.jpeg", alt: "Rich vermicompost with earthworms in soil" },
-  { id: 15, name: "Grapes", description: "Sweet black grapes, seedless variety.", price: 120, quantity: 10, category: "Fruits", image: "https://images.unsplash.com/photo-1533050487297-09b7e6409c91", alt: "Clusters of dark seedless grapes" },
-  { id: 16, name: "Onions", description: "Fresh red onions for cooking.", price: 35, quantity: 25, category: "Vegetables", image: "https://images.unsplash.com/photo-1603046891761-867a356e8302", alt: "Whole and sliced red onions on a surface" },
-  { id: 17, name: "Yogurt", description: "Probiotic-rich homemade yogurt.", price: 80, quantity: 12, category: "Dairy", image: "https://images.unsplash.com/photo-1565123409695-7b5dd08c5da5", alt: "Bowl of creamy homemade yogurt with a spoon" },
-  { id: 18, name: "Urea Fertilizer", description: "High-nitrogen fertilizer for plants.", price: 90, quantity: 50, category: "Fertilizers", image: "https://images.pexels.com/photos/14123017/pexels-photo-14123017.jpeg", alt: "White urea fertilizer granules in a sack" },
-  { id: 19, name: "Pineapples", description: "Tropical pineapples, sweet and tangy.", price: 100, quantity: 8, category: "Fruits", image: "https://images.unsplash.com/photo-1550259114-7e5d77db7672", alt: "Whole and sliced ripe pineapples" },
-  { id: 20, name: "Cucumbers", description: "Crisp cucumbers for salads.", price: 40, quantity: 15, category: "Vegetables", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6", alt: "Fresh green cucumbers on a table" }
+  {
+    id: 1,
+    name: "Fresh Tomatoes",
+    description: "Organic red tomatoes from local farms",
+    price: 40,
+    quantity: 25.5,
+    category: "Vegetables",
+    image: "https://images.unsplash.com/photo-1546470427-e2f300593277?w=300&h=200&fit=crop",
+    alt: "Fresh red tomatoes",
+    rating: 4.5,
+    reviewCount: 23
+  },
+  {
+    id: 2,
+    name: "Green Leafy Vegetables",
+    description: "Fresh spinach and other leafy greens",
+    price: 30,
+    quantity: 15.0,
+    category: "Vegetables",
+    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=200&fit=crop",
+    alt: "Fresh green leafy vegetables",
+    rating: 4.2,
+    reviewCount: 18
+  },
+  {
+    id: 3,
+    name: "Organic Milk",
+    description: "Fresh organic milk from grass-fed cows",
+    price: 60,
+    quantity: 50.0,
+    category: "Dairy",
+    image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=300&h=200&fit=crop",
+    alt: "Fresh organic milk",
+    rating: 4.8,
+    reviewCount: 42
+  },
+  {
+    id: 4,
+    name: "Farm Fresh Eggs",
+    description: "Free-range chicken eggs",
+    price: 8,
+    quantity: 100.0,
+    category: "Dairy",
+    image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=300&h=200&fit=crop",
+    alt: "Farm fresh eggs",
+    rating: 4.6,
+    reviewCount: 31
+  },
+  {
+    id: 5,
+    name: "Seasonal Fruits",
+    description: "Mix of seasonal fresh fruits",
+    price: 80,
+    quantity: 20.0,
+    category: "Fruits",
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&h=200&fit=crop",
+    alt: "Seasonal fresh fruits",
+    rating: 4.3,
+    reviewCount: 27
+  },
+  {
+    id: 6,
+    name: "Organic Fertilizer",
+    description: "Natural compost fertilizer for plants",
+    price: 25,
+    quantity: 75.0,
+    category: "Fertilizers",
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=200&fit=crop",
+    alt: "Organic fertilizer",
+    rating: 4.1,
+    reviewCount: 15
+  }
 ];

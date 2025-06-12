@@ -8,6 +8,8 @@ export interface Product {
   category: string;
   image: string;
   alt: string;
+  rating?: number;
+  reviewCount?: number;
 }
 
 export interface BillItem {
@@ -16,4 +18,14 @@ export interface BillItem {
   unit: string;
   price: number;
   totalPrice: number;
+}
+
+export interface Review {
+  id: number;
+  productId: number;
+  userId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
 }

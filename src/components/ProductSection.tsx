@@ -5,6 +5,7 @@ import { useProductFilter } from "@/hooks/useProductFilter";
 import { ProductSearchFilter } from "@/components/ProductSearchFilter";
 import { ProductGrid } from "@/components/ProductGrid";
 import { BillSection } from "@/components/BillSection";
+import { CartSidebar } from "@/components/CartSidebar";
 
 interface ProductSectionProps {
   products: Product[];
@@ -37,7 +38,10 @@ export const ProductSection = ({
 
   return (
     <section id="buy" className="py-16 px-4 max-w-7xl mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-12 text-green-800">{t('buy.title')}</h2>
+      <div className="flex justify-between items-center mb-12">
+        <h2 className="text-4xl font-bold text-green-800">{t('buy.title')}</h2>
+        <CartSidebar onProceedToPayment={onProceedToPayment} />
+      </div>
       
       {/* Search and Filter Component */}
       <ProductSearchFilter
