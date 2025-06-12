@@ -41,7 +41,7 @@ export const ProductSearchFilter = ({
 
   const clearFilters = () => {
     onSearch("");
-    onFilterCategory("");
+    onFilterCategory("all");
     onFilterPriceRange({ min: 0, max: 1000 });
     setMinPrice(0);
     setMaxPrice(1000);
@@ -72,7 +72,7 @@ export const ProductSearchFilter = ({
           {t('filter.toggle') || "Filters"}
         </Button>
         
-        {(searchQuery || selectedCategory || priceRange.min > 0 || priceRange.max < 1000) && (
+        {(searchQuery || selectedCategory !== "all" || priceRange.min > 0 || priceRange.max < 1000) && (
           <Button variant="ghost" onClick={clearFilters} className="text-red-600">
             {t('filter.clear') || "Clear All"}
           </Button>
@@ -94,7 +94,7 @@ export const ProductSearchFilter = ({
                     <SelectValue placeholder={t('filter.selectCategory') || "All Categories"} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">{t('filter.allCategories') || "All Categories"}</SelectItem>
+                    <SelectItem value="all">{t('filter.allCategories') || "All Categories"}</SelectItem>
                     {categories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}
