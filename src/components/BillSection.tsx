@@ -1,5 +1,5 @@
 
-import { BillItem } from "@/pages/Index";
+import { BillItem } from "@/types/product";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
